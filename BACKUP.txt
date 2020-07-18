@@ -1,0 +1,20 @@
+# take the regular locations, and subtract the start from both!
+		# this sets the start vector to the origin.
+		var startVector = getNationByName(clickedNationName).get_position()
+		var endVector = attackedNation.get_position()
+		endVector -= startVector
+		startVector -= startVector
+		# magnitude of starting vector
+		var magStart = startVector.length()
+		# magnitude of attacked vector
+		var magEnd = endVector.length()
+		# magnitude total
+		var magTotal = magStart * magEnd
+		# dot product of both vectors
+		var vecDot = endVector.dot(startVector)
+		print (vecDot)
+		print (magStart, "<>", magEnd)
+		# theta value is the arccos (just roll with it)
+		# arccos of the dotproduct over the magnitutde total
+		var theta = acos(vecDot/magTotal)
+		print (theta)

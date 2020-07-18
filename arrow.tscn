@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://PNGs/arrow.png" type="Texture" id=1]
+
+[node name="arrow" type="Sprite" groups=[
+"arrow",
+]]
+visible = false
+scale = Vector2( 0.0631147, 0.0631147 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, 100 )
+
+[node name="units" type="Label" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -344.163
+margin_top = -85.7055
+margin_right = -297.163
+margin_bottom = -71.7055
+rect_scale = Vector2( 16.2046, 14.8001 )
+text = "STUPID"
+__meta__ = {
+"_edit_use_anchors_": false
+}

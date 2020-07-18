@@ -1,0 +1,248 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://unitTransferSlider.gd" type="Script" id=1]
+[ext_resource path="res://PNGs/DandEMapFixed.png" type="Texture" id=2]
+[ext_resource path="res://CameraMovement.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/NationCollision.gd" type="Script" id=5]
+[ext_resource path="res://Nations.gd" type="Script" id=6]
+[ext_resource path="res://NextTurnButton.gd" type="Script" id=7]
+[ext_resource path="res://RestartButton.gd" type="Script" id=8]
+[ext_resource path="res://GameOver.gd" type="Script" id=9]
+[ext_resource path="res://PNGs/arrow.png" type="Texture" id=10]
+[ext_resource path="res://PNGs/industryTab.png" type="Texture" id=11]
+[ext_resource path="res://industryTab.gd" type="Script" id=12]
+[ext_resource path="res://playerNation.gd" type="Script" id=13]
+[ext_resource path="res://playerHandler.gd" type="Script" id=14]
+[ext_resource path="res://nation.tscn" type="PackedScene" id=16]
+
+[node name="PlayScene" type="Node2D"]
+
+[node name="MainScene" type="Node2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="DandEMapFixed" type="Sprite" parent="MainScene"]
+position = Vector2( 447.882, 692.897 )
+scale = Vector2( 3.96727, 3.96727 )
+texture = ExtResource( 2 )
+
+[node name="Nations" type="Node2D" parent="MainScene"]
+script = ExtResource( 6 )
+
+[node name="NationAreas" type="Area2D" parent="MainScene/Nations" groups=[
+"nation_collision",
+]]
+script = ExtResource( 5 )
+
+[node name="Nation1" parent="MainScene/Nations/NationAreas" instance=ExtResource( 16 )]
+position = Vector2( 328.308, 192.823 )
+scale = Vector2( 8.19433, 4.1431 )
+units = 3
+team = "Enemies"
+connectedNations = [ "Nation4" ]
+
+[node name="Nation2" parent="MainScene/Nations/NationAreas" instance=ExtResource( 16 )]
+position = Vector2( 521.095, 192.823 )
+connectedNations = [ "Nation5" ]
+
+[node name="Nation3" parent="MainScene/Nations/NationAreas" instance=ExtResource( 16 )]
+position = Vector2( 689.181, 192.823 )
+scale = Vector2( 6.42725, 4.10259 )
+connectedNations = [ "Nation6" ]
+
+[node name="Nation4" parent="MainScene/Nations/NationAreas" instance=ExtResource( 16 )]
+position = Vector2( 313.292, 314.485 )
+scale = Vector2( 8.21266, 5.86072 )
+connectedNations = [ "Nation1", "Nation5" ]
+
+[node name="Nation5" parent="MainScene/Nations/NationAreas" instance=ExtResource( 16 )]
+position = Vector2( 526.256, 314.485 )
+scale = Vector2( 6.06494, 5.60386 )
+connectedNations = [ "Nation4", "Nation2", "Nation6" ]
+
+[node name="Nation6" parent="MainScene/Nations/NationAreas" instance=ExtResource( 16 )]
+position = Vector2( 723.436, 306.413 )
+scale = Vector2( 5.47392, 5.10576 )
+units = 5
+team = "Allies"
+connectedNations = [ "Nation5", "Nation3", "Nation7" ]
+
+[node name="Nation7" parent="MainScene/Nations/NationAreas" instance=ExtResource( 16 )]
+position = Vector2( 750.416, 428.016 )
+scale = Vector2( 3.10836, 2.8993 )
+connectedNations = [ "Nation6" ]
+
+[node name="arrow" type="Sprite" parent="MainScene/Nations" groups=[
+"arrow",
+]]
+visible = false
+scale = Vector2( 0.0631147, 0.0631147 )
+texture = ExtResource( 10 )
+offset = Vector2( 0, 100 )
+
+[node name="units" type="Label" parent="MainScene/Nations/arrow"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -344.163
+margin_top = -85.7055
+margin_right = -297.163
+margin_bottom = -71.7055
+rect_scale = Vector2( 16.2046, 14.8001 )
+text = "STUPID"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="MainScene/Nations" groups=[
+"timer",
+]]
+one_shot = true
+
+[node name="NextTurnButton" type="Button" parent="." groups=[
+"nextTurn",
+]]
+margin_left = 369.923
+margin_top = 12.2774
+margin_right = 452.923
+margin_bottom = 32.2774
+rect_scale = Vector2( 2.81382, 2.81382 )
+text = "NEXT TURN"
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOver" type="Node2D" parent="."]
+visible = false
+scale = Vector2( 3.47388, 3.47388 )
+script = ExtResource( 9 )
+
+[node name="RestartButton" type="Button" parent="GameOver"]
+margin_left = 12.7889
+margin_top = 20.0762
+margin_right = 61.7889
+margin_bottom = 40.0762
+rect_scale = Vector2( 0.965485, 0.709791 )
+text = "RETRY"
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Victory!" type="Label" parent="GameOver"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 58.0
+margin_bottom = 14.0
+rect_scale = Vector2( 1.43402, 1.43402 )
+text = "VICTORY!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="industryTab" type="Sprite" parent="."]
+position = Vector2( 470.541, 230.963 )
+scale = Vector2( 0.552384, 0.428087 )
+texture = ExtResource( 11 )
+script = ExtResource( 12 )
+
+[node name="IndustryCount" type="Label" parent="industryTab"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -576.438
+margin_top = -521.611
+margin_right = -536.438
+margin_bottom = -507.611
+rect_scale = Vector2( 2.31606, 4.35729 )
+text = "7"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainButton" type="Button" parent="industryTab"]
+margin_left = -695.945
+margin_top = -539.523
+margin_right = -683.945
+margin_bottom = -519.523
+rect_scale = Vector2( 20.0993, 7.57165 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AddButton" type="Button" parent="industryTab"]
+margin_left = -454.753
+margin_top = -539.523
+margin_right = -442.753
+margin_bottom = -519.523
+rect_scale = Vector2( 12.4243, 5.11107 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="players" type="Node2D" parent="." groups=[
+"playerList",
+]]
+script = ExtResource( 14 )
+
+[node name="playerNation" type="Node2D" parent="players" groups=[
+"player",
+]]
+script = ExtResource( 13 )
+team = "Allies"
+isCurrent = true
+
+[node name="enemyNation" type="Node2D" parent="players" groups=[
+"player",
+]]
+script = ExtResource( 13 )
+team = "Enemies"
+
+[node name="unitTransferSlider" type="HSlider" parent="." groups=[
+"unitSlider",
+]]
+margin_left = 26.3474
+margin_top = 68.5538
+margin_right = 280.0
+margin_bottom = 84.5538
+max_value = 20.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="unitsTransfering" type="Label" parent="unitTransferSlider"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 18.0797
+margin_top = 39.4464
+margin_right = 58.0797
+margin_bottom = 53.4464
+text = "7"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="confirmButton" type="Button" parent="unitTransferSlider"]
+margin_left = 66.0497
+margin_top = 35.6153
+margin_right = 139.05
+margin_bottom = 55.6153
+text = "CONFIRM"
+
+[node name="cancelButton" type="Button" parent="unitTransferSlider"]
+margin_left = 163.082
+margin_top = 35.6153
+margin_right = 236.082
+margin_bottom = 55.6153
+text = "CANCEL"
+[connection signal="victory" from="MainScene/Nations" to="GameOver" method="_on_Nations_victory"]
+[connection signal="clickedNation" from="MainScene/Nations/NationAreas" to="MainScene/Nations" method="_on_NationAreas_clickedNation"]
+[connection signal="nextTurn" from="NextTurnButton" to="MainScene/Nations" method="_on_NextTurnButton_nextTurn"]
+[connection signal="pressed" from="NextTurnButton" to="NextTurnButton" method="_on_NextTurnButton_pressed"]
+[connection signal="repopulate" from="NextTurnButton" to="MainScene/Nations" method="_on_NextTurnButton_repopulate"]
+[connection signal="pressed" from="GameOver/RestartButton" to="GameOver/RestartButton" method="_on_RestartButton_pressed"]
+[connection signal="pressed" from="industryTab/MainButton" to="industryTab" method="_on_MainButton_pressed"]
+[connection signal="pressed" from="industryTab/AddButton" to="industryTab" method="_on_AddButton_pressed"]
+[connection signal="pressed" from="unitTransferSlider/confirmButton" to="unitTransferSlider" method="_on_confirmButton_pressed"]
+[connection signal="pressed" from="unitTransferSlider/cancelButton" to="unitTransferSlider" method="_on_cancelButton_pressed"]

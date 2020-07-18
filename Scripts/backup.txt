@@ -1,0 +1,176 @@
+"""
+var yDist = -1*(attackedNation.get_position().y-getNationByName(clickedNationName).get_position().y)
+		var xDist = (attackedNation.get_position().x-getNationByName(clickedNationName).get_position().x)
+		var angleDiff = yDist/xDist
+		# The angle from the center beam to the point
+		var theta = atan(angleDiff)
+		
+		if theta > 2*PI:
+			print ("ERR; OUT OF BOUNDS!")
+		if theta > 3*PI/2:
+			print("QUADRANT IV")
+		if theta > PI:
+			print ("QUADRANT III")
+		if theta > PI/2:
+			print ("QUADRANT II")
+		if theta > 0:
+			print ("QUADRANT I")
+		if theta <= 0:
+			print ("Uh...")
+		
+		
+		print ("Y Distance>", yDist, "X Distance>", xDist)
+		print ("DIFF>", yDist/xDist)
+		print ("THETA>", theta)
+		print ("THETA, but in Degrees>", theta * (180/PI))
+		
+		# gets the angle from selected nation to attacking nation
+		# in RADIANS.
+		#var theta = (atan((attackedNation.get_position().y-getNationByName(clickedNationName).get_position().y)/(attackedNation.get_position().x-getNationByName(clickedNationName).get_position().x)))
+		
+"""
+
+
+QUAD I = Fine.
+QUAD II = +PI
+QUAD III = -PI
+QUAD IV = Fine.
+
+
+
+
+
+
+###########################
+	### TESTING ARROW STUFF ###
+	###########################
+	
+	# I'm gonna try to function this whole thing.
+	# wish me luck.
+
+	# place the arrow onto whatever nation you're attacking
+	# otherwise, hide the arrow.
+	
+	# if the nation exists AND if attacking...
+	if attackedNation != null && attacking:
+		
+		# make a new arrow, based on the saved model.
+		var packedArrow = load("res://arrow.tscn")
+		arrow = packedArrow.instance()
+		add_child(arrow)
+		
+		# make it visible, and place it 			~~on the base nation~~.
+		# place it BETWEEN the two nations.
+		arrow.visible = true
+		arrow.set_position((getNationByName(clickedNationName).get_position()+attackedNation.get_position())/2)
+		
+		# Then, update the arrow's unit label with 
+		# the current number of attacking units.
+		arrow.get_child(0).text = String(attackingUnits)
+		
+		# get the vector2 of the distance between dest and current.
+		# this will give us a vector2 we can add to our current
+		# to get our dest. we can use this to scale proper.
+		var diff = attackedNation.get_position() - getNationByName(clickedNationName).get_position()
+		
+		# reset arrow rotaation, then
+		# rotate the arrow, so that it's pointing the right way.
+		arrow.set_rotation(0)
+		
+		#print ("Start Vector>", getNationByName(clickedNationName).get_position(), "<End Vector>",attackedNation.get_position())
+		var startVector = getNationByName(clickedNationName).get_position()
+		var endVector = attackedNation.get_position()
+		var diffVector = endVector - startVector
+		var unitVector = diffVector / (diffVector.length())
+		var thetaMod = 0 # what to add to theta!
+		
+		if diffVector.x < 0:
+			if diffVector.y > 0:
+				#print ("QUADRANT II")
+				thetaMod = PI
+			else:
+				#print ("QUADRANT III")
+				thetaMod = -PI
+		else:
+			if diffVector.y > 0:
+				pass
+				#print ("QUADRANT I")
+			else:
+				pass
+				#print ("QUADRANT IV")
+				#thetaMod = (3*PI)/2
+		
+		var yDist = (endVector.y-startVector.y)
+		var xDist = (endVector.x-startVector.x)
+		var angleDiff = yDist/xDist
+		# The angle from the center beam to the point
+		# IN RADIANS
+		var theta = atan(angleDiff) + thetaMod
+		
+		
+		#print ("Y Distance>", yDist, "X Distance>", xDist)
+		#print ("DIFF>", yDist/xDist)
+		#print ("THETA>", theta)
+		#print ("THETA, but in Degrees>", theta * (180/PI))
+		
+		# gets the angle from selected nation to attacking nation
+		# in RADIANS.
+		#var theta = (atan((attackedNation.get_position().y-getNationByName(clickedNationName).get_position().y)/(attackedNation.get_position().x-getNationByName(clickedNationName).get_position().x)))
+		
+		
+		arrow.set_rotation(theta)
+		#print ("FINAL ROT>", arrow.get_rotation())
+		
+		# now to adjust it to proportions by dividing it by the destination.
+		#diff = Vector2(diff.x/attackedNation.get_position().x, diff.y/attackedNation.get_position().y)
+		
+		# reset the arrow's stretchy
+		arrow.set_scale(arrowScale)
+		
+		# minimum arrow scales!
+		var minX = 0.05
+		var minY = 0.05
+		
+		# Trying this...
+		# multiply its scale by the difference in the points.
+		# in hindsight, i see why this wont work.
+		# but i wanna see it anyways :)
+		var scale = arrow.get_scale()
+		#print (scale)
+		#unitVector.x = unitVector.x * 0.8
+		#unitVector = unitVector * 0.3
+		scale.x = scale.x * -1 * (unitVector.x + unitVector.x)
+		scale.y = scale.y * -1 * (unitVector.y + unitVector.y)
+		if scale.x < minX:
+			scale.x = minX
+		if scale.y < minY:
+			scale.y = minY
+		arrow.set_scale(scale)
+
+	else:
+		if (arrow != null):
+			#arrow.visible = false
+			pass
+		#pass
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+zoomedIn
+	left = (676, 320)
+	right = (676, -1104)
+	downleft = (-548, 320)
+	downRight = (-548, -1104)
+zoomedOut
+	left = 
+	right = 
+	downleft = 
+	downRight = 

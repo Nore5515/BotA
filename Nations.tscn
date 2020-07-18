@@ -1,0 +1,84 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Nations.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/NationCollision.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Nation.gd" type="Script" id=3]
+[ext_resource path="res://PNGs/icon.png" type="Texture" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[node name="Nations" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="NationAreas" type="Area2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="TestNation1" type="CollisionShape2D" parent="NationAreas" groups=[
+"Nation",
+]]
+position = Vector2( 261.053, 144.211 )
+scale = Vector2( 4.38241, 4.38241 )
+shape = SubResource( 1 )
+script = ExtResource( 3 )
+connectedNations = [ "TestNation2", "TestNation3" ]
+
+[node name="shadow" type="Sprite" parent="NationAreas/TestNation1"]
+scale = Vector2( 0.297733, 0.297733 )
+texture = ExtResource( 4 )
+
+[node name="icon" type="Sprite" parent="NationAreas/TestNation1"]
+scale = Vector2( 0.242015, 0.225702 )
+texture = ExtResource( 4 )
+
+[node name="TestNation2" type="CollisionShape2D" parent="NationAreas" groups=[
+"Nation",
+]]
+position = Vector2( 571.68, 144.211 )
+scale = Vector2( 4.38241, 4.38241 )
+shape = SubResource( 1 )
+script = ExtResource( 3 )
+connectedNations = [ "TestNation1", "TestNation4" ]
+
+[node name="shadow" type="Sprite" parent="NationAreas/TestNation2"]
+scale = Vector2( 0.297733, 0.297733 )
+texture = ExtResource( 4 )
+
+[node name="icon" type="Sprite" parent="NationAreas/TestNation2"]
+scale = Vector2( 0.227147, 0.231359 )
+texture = ExtResource( 4 )
+
+[node name="TestNation3" type="CollisionShape2D" parent="NationAreas" groups=[
+"Nation",
+]]
+position = Vector2( 261.053, 293.435 )
+scale = Vector2( 4.38241, 4.38241 )
+shape = SubResource( 1 )
+script = ExtResource( 3 )
+connectedNations = [ "TestNation1" ]
+
+[node name="shadow" type="Sprite" parent="NationAreas/TestNation3"]
+scale = Vector2( 0.297733, 0.297733 )
+texture = ExtResource( 4 )
+
+[node name="icon" type="Sprite" parent="NationAreas/TestNation3"]
+scale = Vector2( 0.228185, 0.228185 )
+texture = ExtResource( 4 )
+
+[node name="TestNation4" type="CollisionShape2D" parent="NationAreas" groups=[
+"Nation",
+]]
+position = Vector2( 807.837, 293.435 )
+scale = Vector2( 4.38241, 4.38241 )
+shape = SubResource( 1 )
+script = ExtResource( 3 )
+team = "Allies"
+connectedNations = [ "TestNation2" ]
+
+[node name="shadow" type="Sprite" parent="NationAreas/TestNation4"]
+scale = Vector2( 0.297733, 0.297733 )
+texture = ExtResource( 4 )
+
+[node name="icon" type="Sprite" parent="NationAreas/TestNation4"]
+scale = Vector2( 0.228185, 0.228185 )
+texture = ExtResource( 4 )
+[connection signal="clickedNation" from="NationAreas" to="." method="_on_NationAreas_clickedNation"]
